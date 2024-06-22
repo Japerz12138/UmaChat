@@ -1,0 +1,24 @@
+@font-face {
+    font-family: 'DFLiHeiPD-W7';
+    src: url('../font/DFLiHeiPD-W7.otf') format('opentype');
+}
+
+body {
+    font-family: 'DFLiHeiPD-W7', sans-serif; /* 设置字体 */
+}
+
+button[type="submit"] {
+    background: url('../ui/button.png') no-repeat;
+    background-size: cover;
+    border: none;
+    padding: 10px 20px; /* 调整按钮大小 */
+    font-size: 18px; /* 调整字体大小 */
+    font-weight: bold; /* 加粗 */
+    color: #ffffff; /* 改变字体颜色 */
+    cursor: pointer; /* 添加鼠标指针样式 */
+    text-shadow: 0 1px 0 green; /* 添加绿色阴影，虚化为0 */
+}
+
+button[type="submit"]:focus {
+    outline: none; /* 移除按钮获取焦点时的虚线框 */
+}
