@@ -11,7 +11,7 @@ button[type="submit"] {
     background: url('../ui/button.png') no-repeat;
     background-size: cover;
     border: none;
-    padding: 10px 20px; /* 调整按钮大小 */
+    padding: 10px 22px; /* 调整按钮大小 */
     font-size: 18px; /* 调整字体大小 */
     font-weight: bold; /* 加粗 */
     color: #ffffff; /* 改变字体颜色 */
