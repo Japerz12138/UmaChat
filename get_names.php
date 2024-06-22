@@ -2,7 +2,7 @@
 
 include 'db_connect.php';
 
-$sql = "SELECT name, avatar FROM avatars"; // 假设你的表名为avatars
+$sql = "SELECT name, avatar FROM avatars";
 $result = $conn->query($sql);
 
 $names = array();
@@ -17,4 +17,3 @@ header('Content-Type: application/json');
 echo json_encode($names);
 
 $conn->close();
-?>

@@ -14,9 +14,9 @@ while ($row = $banned_result->fetch_assoc()) {
 }
 
 $banned_users_placeholder = implode(',', array_fill(0, count($banned_users), '?'));
-$sql = "SELECT * FROM messages WHERE parent_id IS NULL";
+$sql = "SELECT * FROM messages";
 if (count($banned_users) > 0) {
-    $sql .= " AND user_code NOT IN ($banned_users_placeholder)";
+    $sql .= " WHERE user_code NOT IN ($banned_users_placeholder)";
 }
 $sql .= " ORDER BY timestamp DESC LIMIT ? OFFSET ?";
 $stmt = $conn->prepare($sql);
@@ -33,14 +33,13 @@ $result = $stmt->get_result();
 
 $messages = array();
 while ($row = $result->fetch_assoc()) {
-    $row['replies'] = getReplies($conn, $row['id']);
     $messages[] = $row;
 }
 
 // 获取消息总数
-$count_sql = "SELECT COUNT(*) as total FROM messages WHERE parent_id IS NULL";
+$count_sql = "SELECT COUNT(*) as total FROM messages";
 if (count($banned_users) > 0) {
-    $count_sql .= " AND user_code NOT IN ($banned_users_placeholder)";
+    $count_sql .= " WHERE user_code NOT IN ($banned_users_placeholder)";
 }
 $count_stmt = $conn->prepare($count_sql);
 
@@ -63,22 +62,4 @@ header('Content-Type: application/json');
 echo json_encode($response);
 
 $conn->close();
-
-function getReplies($conn, $message_id, $level = 1) {
-    if ($level > 3) {
-        return [];
-    }
-
-    $stmt = $conn->prepare("SELECT * FROM messages WHERE parent_id = ? ORDER BY timestamp ASC LIMIT 8");
-    $stmt->bind_param('i', $message_id);
-    $stmt->execute();
-    $result = $stmt->get_result();
-
-    $replies = array();
-    while ($row = $result->fetch_assoc()) {
-        $row['replies'] = getReplies($conn, $row['id'], $level + 1);
-        $replies[] = $row;
-    }
-    return $replies;
-}
 ?>
