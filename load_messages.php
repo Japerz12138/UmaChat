@@ -13,10 +13,45 @@ while ($row = $banned_result->fetch_assoc()) {
     $banned_users[] = $row['user_code'];
 }
 
+function getReplies($messageId, $level = 1) {
+    global $conn, $banned_users;
+
+    if ($level > 3) {
+        return [];
+    }
+
+    $sql = "SELECT * FROM messages WHERE parent_id = ?";
+    if (count($banned_users) > 0) {
+        $placeholders = implode(',', array_fill(0, count($banned_users), '?'));
+        $sql .= " AND user_code NOT IN ($placeholders)";
+    }
+    $sql .= " ORDER BY timestamp ASC";
+
+    $stmt = $conn->prepare($sql);
+
+    if (count($banned_users) > 0) {
+        $params = array_merge([$messageId], $banned_users);
+        $types = str_repeat('s', count($banned_users));
+        $stmt->bind_param("i$types", ...$params);
+    } else {
+        $stmt->bind_param('i', $messageId);
+    }
+
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    $replies = array();
+    while ($row = $result->fetch_assoc()) {
+        $replies[] = array_merge($row, ['replies' => getReplies($row['id'], $level + 1)]);
+    }
+
+    return $replies;
+}
+
 $banned_users_placeholder = implode(',', array_fill(0, count($banned_users), '?'));
-$sql = "SELECT * FROM messages";
+$sql = "SELECT * FROM messages WHERE parent_id IS NULL";
 if (count($banned_users) > 0) {
-    $sql .= " WHERE user_code NOT IN ($banned_users_placeholder)";
+    $sql .= " AND user_code NOT IN ($banned_users_placeholder)";
 }
 $sql .= " ORDER BY timestamp DESC LIMIT ? OFFSET ?";
 $stmt = $conn->prepare($sql);
@@ -33,13 +68,13 @@ $result = $stmt->get_result();
 
 $messages = array();
 while ($row = $result->fetch_assoc()) {
-    $messages[] = $row;
+    $messages[] = array_merge($row, ['replies' => getReplies($row['id'])]);
 }
 
 // 获取消息总数
-$count_sql = "SELECT COUNT(*) as total FROM messages";
+$count_sql = "SELECT COUNT(*) as total FROM messages WHERE parent_id IS NULL";
 if (count($banned_users) > 0) {
-    $count_sql .= " WHERE user_code NOT IN ($banned_users_placeholder)";
+    $count_sql .= " AND user_code NOT IN ($banned_users_placeholder)";
 }
 $count_stmt = $conn->prepare($count_sql);
 
