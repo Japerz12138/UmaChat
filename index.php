@@ -130,6 +130,10 @@
             });
     }
 
+    function showAlert(message) {
+        alert(message);
+    }
+
     document.getElementById('messageForm').addEventListener('submit', function(event) {
         event.preventDefault();
         const formData = new FormData(event.target);
@@ -139,16 +143,40 @@
 
         formData.append('avatar', avatar);
 
+        // 禁用输入框和按钮
+        const nameSearch = document.getElementById('nameSearch');
+        const messageInput = document.getElementById('message');
+        const submitButton = event.target.querySelector('button[type="submit"]');
+
+        nameSearch.disabled = true;
+        nameSelect.disabled = true;
+        messageInput.disabled = true;
+        submitButton.disabled = true;
+
         fetch('post_message.php', {
             method: 'POST',
             body: formData
         }).then(response => response.text())
             .then(result => {
                 showAlert('发送成功！');
-                loadMessages(currentPage); // 重新加载当前页的消息
+                loadMessages(); // 立即加载新消息
                 event.target.reset();
+
+                // 重新启用输入框和按钮
+                nameSearch.disabled = false;
+                nameSelect.disabled = false;
+                messageInput.disabled = false;
+                submitButton.disabled = false;
             })
-            .catch(error => console.error('Error posting message:', error));
+            .catch(error => {
+                console.error('Error posting message:', error);
+
+                // 出错时也重新启用输入框和按钮
+                nameSearch.disabled = false;
+                nameSelect.disabled = false;
+                messageInput.disabled = false;
+                submitButton.disabled = false;
+            });
     });
 
     document.getElementById('nameSearch').addEventListener('input', function(event) {

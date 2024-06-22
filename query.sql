@@ -22,13 +22,12 @@ CREATE TABLE banned_users (
 
 
 ALTER TABLE messages ADD COLUMN user_code VARCHAR(255);
-ALTER TABLE messages ADD COLUMN parent_id INT DEFAULT NULL;
 
-INSERT INTO avatars (name, avatar) VALUES ('星云天空', '.\resources\img\icon\1020.png');
-INSERT INTO avatars (name, avatar) VALUES ('特别周', '.\resources\img\icon\1001.png');
-INSERT INTO avatars (name, avatar) VALUES ('无声铃鹿', '.\resources\img\icon\1002.png');
-INSERT INTO avatars (name, avatar) VALUES ('米浴', '.\resources\img\icon\1030.png');
-INSERT INTO avatars (name, avatar) VALUES ('第一红宝石', '.\resources\img\icon\1085.png');
-INSERT INTO avatars (name, avatar) VALUES ('樱花千代王', '.\resources\img\icon\1069.png');
-INSERT INTO avatars (name, avatar) VALUES ('曼城茶座', '.\resources\img\icon\1069.png');
-INSERT INTO avatars (name, avatar) VALUES ('东海帝王', '.\resources\img\icon\1003.png');
+INSERT INTO avatars (name, avatar) VALUES ('星云天空', '.\\resources\\img\\icon\\1020.png');
+INSERT INTO avatars (name, avatar) VALUES ('特别周', '.\\resources\\img\\icon\\1001.png');
+INSERT INTO avatars (name, avatar) VALUES ('无声铃鹿', '.\\resources\\img\\icon\\1002.png');
+INSERT INTO avatars (name, avatar) VALUES ('米浴', '.\\resources\\img\\icon\\1030.png');
+INSERT INTO avatars (name, avatar) VALUES ('第一红宝石', '.\\resources\\img\\icon\\1085.png');
+INSERT INTO avatars (name, avatar) VALUES ('樱花千代王', '.\\resources\\img\\icon\\1069.png');
+INSERT INTO avatars (name, avatar) VALUES ('曼城茶座', '.\\resources\\img\\icon\\1069.png');
+INSERT INTO avatars (name, avatar) VALUES ('东海帝王', '.\\resources\\img\\icon\\1003.png');
