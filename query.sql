@@ -6,6 +6,7 @@ CREATE TABLE messages (
                           name VARCHAR(50),
                           avatar VARCHAR(255),
                           message TEXT,
+                          mood VARCHAR(50), -- 新增心情列
                           timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                           user_code VARCHAR(255),
                           parent_id INT DEFAULT NULL

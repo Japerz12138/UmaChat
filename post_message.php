@@ -5,12 +5,13 @@ include 'db_connect.php';
 $name = $_POST['name'];
 $avatar = $_POST['avatar'];
 $message = $_POST['message'];
+$mood = $_POST['mood'];
 $ip_address = $_SERVER['REMOTE_ADDR'];
-$user_code = hash('sha256', $ip_address); // 使用SHA-256哈希算法生成用户特征码
+$user_code = hash('sha256', $ip_address);
 
 // 使用预处理语句防止SQL注入
-$stmt = $conn->prepare("INSERT INTO messages (name, avatar, message, user_code) VALUES (?, ?, ?, ?)");
-$stmt->bind_param("ssss", $name, $avatar, $message, $user_code);
+$stmt = $conn->prepare("INSERT INTO messages (name, avatar, message, mood, user_code) VALUES (?, ?, ?, ?, ?)");
+$stmt->bind_param("sssss", $name, $avatar, $message, $mood, $user_code);
 
 if ($stmt->execute()) {
     echo "新记录插入成功";

@@ -1,10 +1,31 @@
-@font-face {
-    font-family: 'DFLiHeiPD-W7';
-    src: url('../font/DFLiHeiPD-W7.otf') format('opentype');
+:root {
+    --bs-primary: #28a745;
+    --bs-primary-rgb: 40, 167, 69;
+    --bs-link-color: #28a745;
+    --bs-link-hover-color: #218838;
 }
+
+.btn-primary {
+    color: #fff;
+    background-color: var(--bs-primary);
+    border-color: var(--bs-primary);
+}
+
+.btn-primary:hover {
+    color: #fff;
+    background-color: #218838;
+    border-color: #1e7e34;
+}
+
+
 
 body {
     font-family: 'DFLiHeiPD-W7', sans-serif; /* 设置字体 */
+    background-image: url('../img/ui/background.png'); /* 替换为你的背景图片路径 */
+    background-size: 200px 200px; /* 设置背景图片的固定大小 */
+    background-repeat: repeat; /* 设置背景图片重复 */
+    background-attachment: fixed; /* 固定背景图片 */
+    background-position: top left; /* 从左上角开始平铺 */
 }
 
 button[type="submit"] {
@@ -20,5 +41,110 @@ button[type="submit"] {
 }
 
 button[type="submit"]:focus {
-    outline: none; /* 移除按钮获取焦点时的虚线框 */
+    outline: none;
 }
+
+img.img-fluid {
+    max-width: 100%;
+    height: auto;
+}
+
+.new-message-header {
+    background-image: url('../img/ui/title_background.png'); /* 更换为实际的图片路径 */
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    border-top-left-radius: 0.25rem;
+    border-top-right-radius: 0.25rem;
+    padding: 1rem;
+    text-align: center;
+    font-size: 1.25rem;
+    font-weight: bold;
+    text-shadow: 0 1px 0 green;
+}
+
+/* 提交按钮样式 */
+#messageSubmit, #replyForm button[type="submit"], .btn-image {
+    background-color: rgba(0, 123, 255, 0); /* 按钮的默认背景颜色 */
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    transition: transform 0.2s ease; /* 添加过渡效果 */
+}
+
+/* 鼠标悬停时的样式 */
+#messageSubmit:hover, #replyForm button[type="submit"]:hover, .btn-image:hover {
+    transform: scale(1.05); /* 鼠标悬停时放大按钮 */
+}
+
+.btn-image img {
+    max-width: 100%;
+    height: auto;
+    border: none;
+}
+
+.btn-content {
+    position: relative;
+    display: inline-block;
+    text-align: center;
+    width: 100px; /* 调整按钮宽度 */
+    height: 40px; /* 调整按钮高度 */
+}
+
+.btn-text {
+    position: absolute;
+    width: 100%;
+    left: 5px;
+    top: 50%;
+    bottom: 0; /* 调整文字位置 */
+    transform: translateY(-50%);
+    font-weight: bold;
+    font-size: 1.2rem;
+    text-shadow: 1px 1px 2px rgba(91, 91, 91, 0.5);
+}
+
+.rules-text {
+    font-size: 18px; /* 调整字体大小 */
+    color: #FF83B7;
+}
+
+.about-text {
+    color: #57CBFC;
+}
+
+.card-body {
+    padding: 1rem;
+}
+
+.card-body strong {
+    margin-bottom: 0.5rem; /* 添加一点空间 */
+}
+
+.card-text {
+    margin-bottom: 0.5rem; /* 添加一点空间 */
+}
+
+.card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 1rem !important;
+    font-size: 0.875rem;
+    background-color: rgba(224, 247, 250, 0) !important;
+    color: #327300;
+    border-top: 1px solid rgba(0, 0, 0, 0.125);
+    border-bottom-left-radius: 0.25rem;
+    border-bottom-right-radius: 0.25rem;
+    margin: 0 !important;
+}
+
+
+
+
+
+
