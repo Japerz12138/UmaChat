@@ -71,7 +71,7 @@ while ($row = $result->fetch_assoc()) {
     $messages[] = array_merge($row, ['replies' => getReplies($row['id'])]);
 }
 
-// 获取消息总数
+// 获取一下总共的post数量
 $count_sql = "SELECT COUNT(*) as total FROM messages WHERE parent_id IS NULL";
 if (count($banned_users) > 0) {
     $count_sql .= " AND user_code NOT IN ($banned_users_placeholder)";

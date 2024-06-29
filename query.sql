@@ -23,6 +23,16 @@ CREATE TABLE banned_users (
                               user_code VARCHAR(255) NOT NULL
 );
 
+CREATE TABLE likes (
+                       id INT AUTO_INCREMENT PRIMARY KEY,
+                       message_id INT,
+                       user_code VARCHAR(255),
+                       timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+ALTER TABLE messages ADD COLUMN likes INT DEFAULT 0;
+
+
 INSERT INTO avatars (name, avatar) VALUES ('星云天空', '.\\resources\\img\\icon\\1020.png');
 INSERT INTO avatars (name, avatar) VALUES ('特别周', '.\\resources\\img\\icon\\1001.png');
 INSERT INTO avatars (name, avatar) VALUES ('无声铃鹿', '.\\resources\\img\\icon\\1002.png');

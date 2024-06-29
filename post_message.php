@@ -10,7 +10,7 @@ $ip_address = $_SERVER['REMOTE_ADDR'];
 $user_code = hash('sha256', $ip_address);
 
 // 使用预处理语句防止SQL注入
-$stmt = $conn->prepare("INSERT INTO messages (name, avatar, message, mood, user_code) VALUES (?, ?, ?, ?, ?)");
+$stmt = $conn->prepare("INSERT INTO messages (name, avatar, message, mood, user_code, likes) VALUES (?, ?, ?, ?, ?, 0)");
 $stmt->bind_param("sssss", $name, $avatar, $message, $mood, $user_code);
 
 if ($stmt->execute()) {
@@ -21,4 +21,3 @@ if ($stmt->execute()) {
 
 $stmt->close();
 $conn->close();
-?>

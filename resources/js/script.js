@@ -59,16 +59,38 @@ function loadMessages(page = 1) {
                 timestampSmall.textContent = msg.timestamp;
 
                 const cardFooter = document.createElement('div');
-                cardFooter.classList.add('card-footer');
+                cardFooter.classList.add('card-footer', 'd-flex', 'justify-content-between');
                 const messageIdSpan = document.createElement('span');
                 messageIdSpan.textContent = `ID: ${msg.id}`;
+
+                const likeDiv = document.createElement('div');
+                likeDiv.classList.add('d-flex', 'align-items-center');
+                const likeButton = document.createElement('img');
+                likeButton.src = msg.liked ? './resources/img/like/liked_1.png' : './resources/img/like/liked_0.png';
+                likeButton.style.cursor = 'pointer';
+                likeButton.style.width = '20px'; // 调整いいね按钮大小
+                likeButton.style.height = '20px'; // 调整いいね按钮大小
+                if (msg.liked) {
+                    likeButton.classList.add('liked');
+                    likeButton.style.pointerEvents = 'none'; // 禁用按钮
+                }
+                likeButton.addEventListener('click', () => likeMessage(msg.id, likeButton, likeCountSpan));
+
+                const likeCountSpan = document.createElement('span');
+                likeCountSpan.textContent = `${msg.likes}人觉得いいね！`;
+                likeCountSpan.classList.add('ms-2');
+
+                likeDiv.appendChild(likeButton);
+                likeDiv.appendChild(likeCountSpan);
                 cardFooter.appendChild(timestampSmall);
                 cardFooter.appendChild(messageIdSpan);
+                cardFooter.appendChild(likeDiv);
 
                 const replyButton = document.createElement('button');
                 replyButton.classList.add('btn', 'btn-link', 'position-absolute', 'top-0', 'end-0');
                 const replyIcon = document.createElement('i');
-                replyIcon.classList.add('bi', 'bi-reply-fill');
+                replyIcon.classList.add('bi', 'bi-reply-fill', 'green-icon');
+                replyIcon.style.fontSize = '1.3rem';
                 replyButton.appendChild(replyIcon);
                 replyButton.addEventListener('click', () => showReplyForm(msg.id, msg.name));
 
@@ -96,7 +118,7 @@ function loadMessages(page = 1) {
 
             const prevButton = document.createElement('button');
             prevButton.classList.add('btn', 'btn-secondary', 'me-2');
-            prevButton.textContent = '上一页';
+            prevButton.textContent = '←';
             prevButton.disabled = data.current_page === 1;
             prevButton.addEventListener('click', () => loadMessages(data.current_page - 1));
             paginationDiv.appendChild(prevButton);
@@ -107,7 +129,7 @@ function loadMessages(page = 1) {
 
             const nextButton = document.createElement('button');
             nextButton.classList.add('btn', 'btn-secondary', 'ms-2');
-            nextButton.textContent = '下一页';
+            nextButton.textContent = '→';
             nextButton.disabled = data.current_page === totalPages;
             nextButton.addEventListener('click', () => loadMessages(data.current_page + 1));
             paginationDiv.appendChild(nextButton);
@@ -123,7 +145,7 @@ function loadMessages(page = 1) {
 
             const jumpButton = document.createElement('button');
             jumpButton.classList.add('btn', 'btn-primary', 'ms-2');
-            jumpButton.textContent = '跳转';
+            jumpButton.textContent = 'GO!';
             jumpButton.addEventListener('click', () => {
                 let newPage = parseInt(pageInput.value);
                 if (newPage >= 1 && newPage <= totalPages) {
@@ -135,6 +157,7 @@ function loadMessages(page = 1) {
             paginationDiv.appendChild(jumpButton);
         });
 }
+
 
 function getMoodImageUrl(mood) {
     switch (mood) {
@@ -344,6 +367,7 @@ document.getElementById('messageForm').addEventListener('submit', function(event
     const selectedOption = nameSelect.options[nameSelect.selectedIndex];
     const avatar = selectedOption.dataset.avatar;
     const messageContent = document.getElementById('message').value;
+    const messageSubmitButton = document.getElementById('messageSubmit');
 
     if (messageContent.trim() === "") {
         showToast('请输入留言内容！');
@@ -356,6 +380,10 @@ document.getElementById('messageForm').addEventListener('submit', function(event
     }
 
     formData.append('avatar', avatar);
+
+    // 禁用发布按钮和输入框
+    messageSubmitButton.disabled = true;
+    messageContent.disabled = true;
 
     fetch('post_message.php', {
         method: 'POST',
@@ -370,6 +398,11 @@ document.getElementById('messageForm').addEventListener('submit', function(event
         .catch(error => {
             console.error('Error posting message:', error);
             showToast('草！发送失败了！');
+        })
+        .finally(() => {
+            // 恢复发布按钮和输入框
+            messageSubmitButton.disabled = false;
+            messageContent.disabled = false;
         });
 });
 
@@ -413,6 +446,36 @@ function updateReplyCharacterCount() {
         replyInput.parentElement.appendChild(replyCountDiv);
     }
 }
+
+function likeMessage(messageId, likeButton, likeCountSpan) {
+    // 检查是否已点いいね
+    if (likeButton.classList.contains('liked')) {
+        return; // 如果已经被标记为いいね，就啥都不干
+    }
+
+    fetch('like_message.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ messageId })
+    }).then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                likeButton.src = './resources/img/like/liked_1.png';
+                likeButton.style.pointerEvents = 'none';
+                likeButton.classList.add('liked'); // 添加liked类来标记いいね按钮已被点击
+                likeCountSpan.textContent = `${data.likes}人觉得いいね！`;
+            } else {
+                showToast('你已经点いいね啦~');
+            }
+        })
+        .catch(error => {
+            console.error('Error liking message:', error);
+            showToast('いいね失败');
+        });
+}
+
 
 loadNames(); // 页面加载时加载名称列表
 loadMessages(currentPage); // 页面加载时加载第一页的消息

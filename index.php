@@ -5,8 +5,10 @@
     <title>UmaChat</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" href="./resources/img/ui/favicon.png" type="image/png"> <!-- 网站图标 -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+<!--    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">-->
+    <link href="./resources/css/bootstrap/bootstrap.min.css" rel="stylesheet">
+<!--    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">-->
+    <link rel="stylesheet" href="./resources/css/bootstrap-icons/font/bootstrap-icons.css">
     <link href="./resources/css/stylesheet.css" rel="stylesheet">
 </head>
 <body>
@@ -169,7 +171,8 @@
     </div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+<!--<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>-->
+<script src="./resources/js/bootstrap/bootstrap.bundle.min.js"></script>
 <script src="./resources/js/script.js"></script>
 </body>
 </html>
