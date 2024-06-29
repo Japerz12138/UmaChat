@@ -158,7 +158,21 @@
                 <h5>管理者</h5>
                 <p>杰帕斯(QQ: 1952135253) [VRC马娘吧]</p>
                 <h5>UmaChat版本</h5>
-                <p>v1.0.0 (Initial Publish) [20240624001]</p>
+                <p>v1.1.0 [20240629001]</p>
+                <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#updateLog" aria-expanded="false" aria-controls="updateLog">
+                    该版本更新日志
+                </button>
+                <div class="collapse" id="updateLog">
+                    <div class="card card-body">
+                        <ul>
+                            <li>新增点赞功能</li>
+                            <li>修复了发布按钮在点击发布后等待服务器返回状态前依然可以点击导致刷屏的问题</li>
+                            <li>右上角的回复按钮变大，颜色改为绿色</li>
+                            <li>由于jsdelivr在某些地区访问速度过慢，bootstrap和bootstrap icon改为本地host</li>
+                            <li>更 新 了 版 本 号</li>
+                        </ul>
+                    </div>
+                </div>
                 <h5>版权说明</h5>
                 <p>本站部分资源来源于网络，以及Cygames旗下的游戏“ウマ娘”游戏资源。如果侵权请联系站长对侵权内容进行删除处理。</p>
                 <p>请务必支持正版游戏：https://umamusume.jp/</p>
@@ -170,6 +184,8 @@
         </div>
     </div>
 </div>
+
+
 
 <!--<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>-->
 <script src="./resources/js/bootstrap/bootstrap.bundle.min.js"></script>
