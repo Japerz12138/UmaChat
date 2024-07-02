@@ -147,6 +147,19 @@ img.img-fluid {
     margin: 0 !important;
 }
 
+/* 确保UmaChat系统通知优先级低于分页按钮 */
+.toast-container {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    z-index: 1050;
+}
+
+/* 确保优先级高于 toast-container */
+#pagination {
+    position: relative;
+    z-index: 1060;
+}
 
 
 
